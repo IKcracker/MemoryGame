@@ -24,25 +24,36 @@ cardLeft.innerText = cleft;
 let colRan = 0;
 
 const colRandom = ()=> {
-  
- 
+  //this algorith is called The Fisher-Yates shuffle algorithm it generates random numbers making sure that none is repeated
+  function generateRandomNumbers(min, max, count) {
+    // Create an array of numbers from min to max
+    const numbers = Array.from({ length: max - min + 1 }, (v, k) => k + min);
+    
+    // Fisher-Yates shuffle algorithm
+    for (let i = numbers.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [numbers[i], numbers[j]] = [numbers[j], numbers[i]];
+    }
+
+    // Return the first 'count' numbers from the shuffled array
+    return numbers.slice(0, count);
+}
 
   for(let i = 0 ; i < 4 ; i++)
     {
      
-      tempCol[i] = col[i];
+      tempCol.push(col[i]);
 
     }
-  col[0] = tempCol[3];
-  col[1] = tempCol[2]
-  col[2] = tempCol[4]
-  col[3]=  tempCol[1]
+    col.forEach( c =>{
+      c = tempCol[generateRandomNumbers(0,4,1)];
+    })
 }
 
 
 const rendomnise = ()=>{
 
-        for(i = 0 ; i < 8 ;i++ ){  
+        for(let i = 0 ; i < 8 ;i++ ){  
                     do{
                         number = Math.floor(Math.random() * 8);
                         check =randomNumbersA.includes(number)
@@ -53,7 +64,7 @@ const rendomnise = ()=>{
 
                 }
 
-                for(i = 8 ; i < 16 ;i++ ){  
+                for(let i = 8 ; i < 16 ;i++ ){  
 
                   do{
                       number = Math.floor(Math.random() * 8);
@@ -76,6 +87,19 @@ const rendomnise = ()=>{
                  
 }
 let cardStore = [];
+
+
+const disableCards = ()=>{
+  cards.forEach(card =>{
+    card.style.pointerEvents = 'none'
+  })
+}
+
+const enableCards = ()=>{
+  cards.forEach(card =>{
+    card.style.pointerEvents = 'auto'
+  })
+}
 
 btn.addEventListener('click' , ()=>{
   // 
@@ -109,20 +133,29 @@ btn.addEventListener('click' , ()=>{
 
 cards.forEach(box => {
   box.addEventListener('click',()=>{
+    box.style.transition= '.5s ease';
+    box.firstChild.style.transition= '.5s ease';
+    box.style.transform= 'rotateY(180deg)';
+    box.firstElementChild.style.transform= 'rotateY(180deg)';
     if(cardStore.length == 0){
-
+        cardStore= [];
         cardStore.push(box.firstChild) ;
         box.firstChild.style.color = '#8ECAE6'
         box.firstChild.style.visibility = 'visible'
         box.style.border = `#8ECAE6 .2rem solid`;
+        box.style.pointerEvents = 'none'
         console.log(cardStore[0]);
+       
     }
     else{
       box.firstChild.style.visibility = 'visible'      
       console.log(box.firstChild.innerText)
+  
+      disableCards();
 
         if(cardStore[0].innerText === box.firstChild.innerText)
           {
+            enableCards();
             box.firstChild.style.visibility = 'visible'
             box.firstChild.style.color = '#FB8500';
             box.style.border = `#FFB703 .2rem solid`;
@@ -133,24 +166,25 @@ cards.forEach(box => {
             cardStore= [];
             cleft = cleft - 2;
             cardLeft.innerText = cleft;
-            if(cardLeft.innerText == 0)
-              {
-                setTimeout(()=>{
-                    body.style.backgroundColor ="#023047"
-                    cards.forEach(card=>{
-                      card.style.backgroundColor ="#023047"
-                      card.style.border ="none"
-                      card.firstChild.style.visibility  ="hidden"
-                      popUp.style.visibility = 'visible'
-                      popUp.style.top = '50%'
-                      popUp.style.transform = 'translate(-50% , -50%) scale(1)'
-                    })
-                },3000)
-               
-              } 
+            
+                      if(cardLeft.innerText == 0)
+                        {
+                          setTimeout(()=>{
+                              body.style.backgroundColor ="#023047"
+                              cards.forEach(card=>{
+                                card.style.backgroundColor ="#023047"
+                                card.style.border ="none"
+                                card.firstChild.style.visibility  ="hidden"
+                                popUp.style.visibility = 'visible'
+                                popUp.style.top = '50%'
+                                popUp.style.transform = 'translate(-50% , -50%) scale(1)'
+                              })
+                          },3000)
+                        
+                        } 
           }
       else{
-        box.firstChild.style.visibility = 'visible'
+       
         box.firstChild.style.color = 'red'
         box.style.border = `red .2rem solid`;
             setTimeout(()=>{
@@ -158,11 +192,13 @@ cards.forEach(box => {
               cardStore[0].style.visibility = 'hidden';
               cardStore[0].parentElement.style.border = `0rem`;
               box.style.border = `0rem`;
-              cardStore= [];
               num = num - 5 ;
               points.innerText = num;
-             
+              cardStore= [];
+
+             enableCards()
             },2000)
+          
           }
     }
    
