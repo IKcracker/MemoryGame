@@ -198,8 +198,8 @@ cards.forEach(box => {
                                 card.firstChild.style.color ="#023047"
                                 card.style.border ="none"
                                 card.firstChild.style.visibility  ="hidden" 
-                          
-                             
+                                card.style.visibility = 'visible'
+                                })
                               setTimeout(()=>{
                                 popUp.style.visibility = 'visible'
                                 popUp.style.top = '50%'
