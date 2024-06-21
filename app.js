@@ -190,14 +190,15 @@ cards.forEach(box => {
             let timer =0;
                       if(cardLeft.innerText == 0)
                         {
-                          setTimeout(()=>{
+                          
+                
                               body.style.backgroundColor ="#023047"
-                              cards.forEach(card=>{
+                                cards.forEach(card=>{
                                 card.style.backgroundColor ="#023047"
                                 card.firstChild.style.color ="#023047"
                                 card.style.border ="none"
                                 card.firstChild.style.visibility  ="hidden" 
-                              })
+                          
                              
                               setTimeout(()=>{
                                 popUp.style.visibility = 'visible'
