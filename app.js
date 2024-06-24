@@ -78,12 +78,12 @@ const rendomnise = ()=>{
                 
                
               }
-               console.log(randomNumbers);
+              
                for(let s = 0 ; s < 16 ; s++)
                 {
                   
                   mainLetters[s].innerText = letters[randomNumbers[s]];
-                  console.log('hey',mainLetters[s].innerText)
+                 
                 }
                  
 }
@@ -128,7 +128,6 @@ btn.addEventListener('click' , ()=>{
   cleft = 16;
   points.innerText = num;
   cardLeft.innerText = cleft;
-
   mainLetters.forEach(l=>{
     l.style.visibility = 'hidden'
   })
@@ -196,8 +195,8 @@ cards.forEach(box => {
                                 card.style.backgroundColor ="#023047"
                                 card.firstChild.style.color ="#023047"
                                 card.style.border ="none"
-                                card.firstChild.style.visibility  ="hidden" 
-                                card.style.visibility  ="hidden" 
+                                card.firstChild.style.pointerEvents  ="none" 
+                                card.style.pointerEvents ="none" 
                               })
                              
                               setTimeout(()=>{
